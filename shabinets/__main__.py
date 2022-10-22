@@ -2,7 +2,7 @@ from flask import Flask
 
 app = Flask("shabinets")
 
-@app.route('/hello')
+@app.route('/')
 
 def hello():
 
