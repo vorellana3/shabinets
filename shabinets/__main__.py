@@ -7,4 +7,3 @@ app = Flask("shabinets")
 def hello():
 
     return "Hello world!"
-
