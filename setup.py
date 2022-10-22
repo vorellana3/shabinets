@@ -6,5 +6,5 @@ setup(
     description='Not so shabby food inventory management',
     author='Sean Aoki, Nithya Jayakumar, Vivien Orellana, Holden Rohrer',
     packages=['shabinets'],
-    install_requires=[],
+    install_requires=['pandas'],
 )
