@@ -1,57 +1,22 @@
-import logo from './oven-kitchen-tool-for-cooking-foods.svg';
-import './App.css';
-import {Component} from 'react';
+import {Component} from "react";
 import Recipe from './Recipe.js';
+import './App.css';
 
-class App extends Component {
+class NewRecipe extends Component {
+
   constructor(props) {
     super(props);
 
     this.state = {
-      page: "newrecipe",
       title: "",
       ingredients: [],
       steps: [],
     };
-
-
-    this.errorPage = this.errorPage.bind(this);
-    this.getPage = this.getPage.bind(this);
-    this.newRecipe = this.newRecipe.bind(this);
   }
-  
+
   render() {
     return (
-      <div>
-        <div className="topbar">
-          <div className="topbar-recipe-recommendation" onClick={this.newRecipe}>
-            New Recipe
-          </div>
-        </div>
-        <div className="mainbody">
-          {this.getPage()}
-        </div>
-      </div>
-    );
-  }
-
-  getPage() {
-    switch(this.state.page) {
-      case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps}/>
-      default: return this.errorPage();
-    }
-  }
-
-  errorPage() {
-    return (
-      <div className="error-page">
-        <header className="error-page-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Shabinets Error
-          </p>
-        </header>
-      </div>
+      <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps} />
     );
   }
 
@@ -122,8 +87,7 @@ class App extends Component {
       steps: recipes[id][2],
     });
   }
-  
 
 }
 
-export default App;
+export default NewRecipe;
