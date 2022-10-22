@@ -1,9 +1,13 @@
-from flask import Flask
+from flask import Flask, jsonify
+import json
 
 app = Flask("shabinets")
 
-@app.route('/hello')
+@app.route('/')
 
-def hello():
+def index():
 
-    return "Hello world!"
+    return jsonify({'1': 'sugar',
+                    '2': 'milk'})
+
+app.run()
