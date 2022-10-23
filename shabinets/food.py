@@ -1,10 +1,12 @@
 import datetime
+import DataHandler
 
 class Food:
-    foodID = 0
-    dateBought = datetime.datetime(0, 0, 0)
-    dateExpiry = datetime.datetime(0, 0, 0)
-    amount = 0.0
+    foodID = None
+    foodName = None
+    dateBought = None
+    dateExpiry = None
+    amount = None
 
     def __init__(self, foodID, dateBought, dateExpiry, amount):
         self.foodID = foodID
@@ -12,7 +14,10 @@ class Food:
         self.dateExpiry = dateExpiry
         self.amount = amount
 
+    def addToFood(self):
+        database = DataHandler()
+        database.addFood()
 
-
-    
-
+    def addToUserFood(self):
+        database = DataHandler()
+        database.addUserFood(self.foodID, self.dateBought, self.dateExpiry, self.amount)
