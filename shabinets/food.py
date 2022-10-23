@@ -14,17 +14,6 @@ class Food:
         self.dateExpiry = dateExpiry
         self.amount = amount
 
-
-<<<<<<< Updated upstream
-
-    
-
-||||||| constructed merge base
     def addToUserFood(self):
         database = DataHandler()
         database.addUserFood(self.foodID, self.dateBought, self.dateExpiry, self.amount)
-=======
-    def addToUserFood(self):
-        database = DataHandler()
-        database.addUserFood(self.foodID, self.dateBought, self.dateExpiry, self.amount)
->>>>>>> Stashed changes
