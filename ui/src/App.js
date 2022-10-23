@@ -2,13 +2,14 @@ import logo from './oven-kitchen-tool-for-cooking-foods.svg';
 import './App.css';
 import {Component} from 'react';
 import Recipe from './Recipe.js';
+import PerishablePrompt from './PerishablePrompt.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      page: "newrecipe",
+      page: "perishables",
       title: "",
       ingredients: [],
       steps: [],
@@ -24,8 +25,11 @@ class App extends Component {
     return (
       <div>
         <div className="topbar">
-          <div className="topbar-recipe-recommendation" onClick={this.newRecipe}>
+          <div className="topbar-button topbar-recipe-recommendation" onClick={this.newRecipe}>
             New Recipe
+          </div>
+      <div className="topbar-button topbar-perishables-prompt" onClick={() => this.setState({page: "perishables"})}>
+            Input Perishables
           </div>
         </div>
         <div className="mainbody">
@@ -38,6 +42,7 @@ class App extends Component {
   getPage() {
     switch(this.state.page) {
       case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps}/>
+      case "perishables": return <PerishablePrompt header="Enter your perishables" />
       default: return this.errorPage();
     }
   }
@@ -117,6 +122,7 @@ class App extends Component {
     let id = Math.floor(Math.random() * recipes.length);
 
     this.setState({
+      page: "newrecipe",
       title: recipes[id][0],
       ingredients: recipes[id][1],
       steps: recipes[id][2],

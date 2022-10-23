@@ -41,15 +41,16 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  padding: 8px 0;
 }
 
-.topbar-recipe-recommendation {
+.topbar-button {
   border: 1px solid white;
   border-radius: 8px;
   padding: 8px;
 }
 
-.topbar-recipe-recommendation:hover {
+.topbar-button:hover {
   color: #61dafb;
   background-color: #333842;
   cursor: pointer;
@@ -67,6 +68,40 @@
   margin: 4px;
 }
 
+.button-container {
+  width: 100%;
+  display: flex;
+  padding: 0 8px;
+}
+
+.perishable-prompt-header {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 24px;
+}
+
+.perishable-button {
+  margin-right: 16px;
+  padding: 4px 8px;
+}
+
+.perishable-form {
+  padding: 16px;
+}
+
+.perishable-field {
+  margin: 8px;
+}
+
+.perishable-field-item-input {
+  width: max-content;
+}
+
+.perishable-field-dates {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0;
+}
 
 
 
