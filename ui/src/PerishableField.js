@@ -90,7 +90,7 @@ class PerishableField extends Component {
   }
 
   getItemChoices() {
-    fetch('http://localhost:5000/suggestions')
+    fetch(this.props.backend + '/suggestions')
       .then((response) => response.json())
       .then((response) => {
           

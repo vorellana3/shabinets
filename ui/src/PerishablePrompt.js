@@ -53,6 +53,7 @@ class PerishablePrompt extends Component {
         key={this.perishableFields.length}
         id={this.perishableFields.length + 1}
         update={this.updatePerishable}
+        backend={this.props.backend}
       />
     );
   }

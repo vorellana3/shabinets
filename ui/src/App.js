@@ -3,17 +3,20 @@ import './App.css';
 import {Component} from 'react';
 import Recipe from './Recipe.js';
 import PerishablePrompt from './PerishablePrompt.js';
+import Expiring from './Expiring.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      page: "newrecipe",
+      page: "home",
       title: "",
       ingredients: [],
       steps: "",
     };
+
+    this.BACKEND = 'http:localhost:5000';
 
 
     this.errorPage = this.errorPage.bind(this);
@@ -25,11 +28,17 @@ class App extends Component {
     return (
       <div>
         <div className="topbar">
-          <div className="topbar-button topbar-recipe-recommendation" onClick={this.newRecipe}>
+          <div className="topbar-button topbar-recipe-recommendation" onClick={() => {
+            this.setState({page: "newrecipe"});
+            this.nextRecipe();
+          }}>
             New Recipe
           </div>
-      <div className="topbar-button topbar-perishables-prompt" onClick={() => this.setState({page: "perishables"})}>
+          <div className="topbar-button topbar-perishables-prompt" onClick={() => this.setState({page: "perishables"})}>
             Input Perishables
+          </div>
+          <div className="topbar-button topbar-expiring" onClick={() => this.setState({page: "expiring"})}>
+            Expiring Food
           </div>
         </div>
         <div className="mainbody">
@@ -41,8 +50,10 @@ class App extends Component {
 
   getPage() {
     switch(this.state.page) {
+      case "home": return <div className="home">Welcome to Shabinets!</div>
       case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps}/>
-      case "perishables": return <PerishablePrompt header="Enter your perishables" fieldCount={0} />
+      case "perishables": return <PerishablePrompt header="Enter your perishables" fieldCount={0} backend={this.BACKEND}/>
+      case "expiring": return <Expiring backend={this.BACKEND}/>
       default: return this.errorPage();
     }
   }
@@ -61,7 +72,7 @@ class App extends Component {
   }
 
   newRecipe() {
-    let api = "http://localhost:5000/new-recipe";
+    let api = this.BACKEND + '/new-recipe';
     fetch(api).then(response => response.json()).then(output => 
         this.setState({
             title: output['recipe']['label'],
