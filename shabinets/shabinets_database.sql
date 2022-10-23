@@ -14,7 +14,7 @@ create table recipes (
     recipe_name VARCHAR(1024) not null,
     pic_link VARCHAR(1024),
     instructions_link VARCHAR(1024),
-    primary key (id),
+    primary key (id)
 );
 
 create table recipe_ingredient (
@@ -57,17 +57,17 @@ values ("Rocks", NULL, "https://hrhr.dev"),
 
 insert into recipe_ingredient (recipe_id, food_id, amount, display_line)
 values (1,1,1,"yummy yummy salt"),
-values (1,2,.33,"pretty pretty quartz"),
-values (1,3,.01,"and a sprinkle of diamond"),
-values (3,4,.5,"a splash of milk"),
-values (3,10,1,"cream for thickening"),
-values (3,9,1,"sugar, rocky"),
-values (2,7,3,"make it really red"),
-values (2,8,1,"yeah it has steak in it too"),
-values (4,8,1,"just a really big steak, nothing else"),
-values (5,11,"salmon, my favorite -- stalin");
+(1,2,.33,"pretty pretty quartz"),
+(1,3,.01,"and a sprinkle of diamond"),
+(3,4,.5,"a splash of milk"),
+(3,10,1,"cream for thickening"),
+(3,9,1,"sugar, rocky"),
+(2,7,3,"make it really red"),
+(2,8,NULL,"yeah it has steak in it too"),
+(4,8,NULL,"just a really big steak, nothing else"),
+(5,11,1,"salmon, my favorite -- stalin");
 
 insert into user_food (food_id, expire_date, amount)
-values (1, 1, '2023-01-04', 3),
-values (2, 8, '2022-01-01', 1),
-values (3, 11, '2022-10-25', 11);
+values (1, '2023-01-04', 3),
+(8, '2022-01-01', 1),
+(11, '2022-10-25', 11);
