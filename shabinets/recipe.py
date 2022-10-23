@@ -2,17 +2,18 @@ from http.client import PROXY_AUTHENTICATION_REQUIRED
 import json
 import datetime
 from unicodedata import name
-import food
+import shabinets.food
 from time import sleep
 import requests
-import json
-import food
-from DataHandler import DataHandler
+from shabinets.DataHandler import DataHandler
 
 def getPotentialIngredients():
-    ingredients = ["bacon", "lettuce", "cheese", "tomates", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
+    ingredients = ["bacon", "lettuce", "cheese", "tomatoes", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
                    "anchovy", "onion", "garlic", "pineapple", "gouda", "muenster", "steak", "sugar", "flour", "pumpkin",
-                   "carrot", "peas", "broccoli", "brussel sprouts", "tofu", "chili", "beans"]
+                   "carrot", "peas", "broccoli", "brussel sprouts", "tofu", "chili", "beans", "milk", "fish", "celery",
+                   "swiss", "cottage", "cheddar", "bread", "apple", "turkey", "salmon", "catfish", "shrimp", "octopus",
+                   "butter", "yogurt", "cream", "mango", "yeast"]
+    return ingredients
     
 
 
@@ -20,18 +21,29 @@ def getRecipe(search):
     request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
     response = requests.get(request_string)
     response = response.json()
+#    dataHandler = DataHandler()
+#    for recipe in response["hits"]:
+#        dataHandler.addRecipe(recipe)
     numb = random.randrange(0, response["to"])
     return response["hits"][numb]
 
 def getAllRecipes():
+#    ingredients = getPotentialIngredients()
     ingredients = getPotentialIngredients()
+    
     for search in ingredients:
-        sleep(7)
         request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
-        response = requests.get(request_string)
-        response = json.dumps(response.json(), indent=4)
+        sleep(7)
+        response = requests.get(request_string).json()
+#            for recipe in response["hits"]:
+#                for ingredient in recipe["ingredients"]:
+#                    if ingredient not in ingredients:
+#                        ingredients.append(ingredient)
+        response_str = json.dumps(response, indent=4)
         with open("recipes.json", "a") as outfile:
-            outfile.write(response)
+            outfile.write(response_str)
+
+
 def getNextRecipe():
     #access next perishable to expire
     database = DataHandler()
@@ -39,7 +51,6 @@ def getNextRecipe():
     in_database = True
     if next_perishable == None:
         in_database = False
-    #if it's in the database, get recipe here
     if in_database:
         recipe = database.getRecipeByFood(next_perishable)
         database.incrementPreference(recipe, -10)
@@ -84,8 +95,10 @@ def jsonFromRecipe(recipe):
                 "label": recipe.name,
                 "ingredients": self.ingredients,
                 "image": self.picture,
-                "instructions": self.instructions
+                "instructions": self.instructions,
                 "id": self.id
                 }
             }
     return json.dumps(recipe_json)
+
+

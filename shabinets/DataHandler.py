@@ -1,8 +1,6 @@
 import mysql.connector
 from dotenv import load_dotenv
 import os
-from food import Food
-from recipe import Recipe
 load_dotenv()
 
 class DataHandler:
@@ -36,13 +34,13 @@ class DataHandler:
     self.cursor.execute(sql, val)
     self.mydb.commit()
 
-  def getRecipeByFood(self, perishableObject):
+  def getRecipeByFood(self, perishableObjectName):
     recipeName = None
     recipeId = None
     recipePicture = None
     instructionsLink = None
     ingredientsList = []
-    perishable = perishableObject.getName()
+    perishable = perishableObjectName
     query = ("select recipe_id from recipe_ingredient where food_name = %s")
     self.cursor.execute(query, (perishable))
     for recipe_id in self.cursor:
@@ -79,8 +77,8 @@ class DataHandler:
     food = Food(foodName, boughtId, expireId, foodAmount)
     return food
 
-    def incrementPreference(recipeObject, increment):
-      id = recipeObject.getId()
+    def incrementPreference(recipeObjectID, increment):
+      id = recipeObject
       sql = "UPDATE recipes SET points = recipeObject + increment WHERE user_id = %s"
       self.cursor.execute(sql,(id))
       self.mydb.commit

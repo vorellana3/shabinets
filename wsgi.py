@@ -1,10 +1,9 @@
 from flask import Flask, jsonify
 from shabinets import Food, getRecipe, getAllRecipes, getNextRecipe
 import json
-<<<<<<< HEAD:shabinets/__main__.py
-from recipe import getRecipe, getAllRecipes, getNextRecipe, getPotentialIngredients
+from shabinets.recipe import getRecipe, getAllRecipes, getNextRecipe, getPotentialIngredients
 from flask_cors import CORS, cross_origin
-import DataHandler
+from shabinets.DataHandler import DataHandler
 
 app = Flask("shabinets")
 CORS(app)
@@ -32,10 +31,18 @@ def getNewRecipe():
 
     return getNextRecipe()
 
-<<<<<<< HEAD:shabinets/__main__.py
-@app.route('/suggestions')
+@app.route('/api/suggestions')
 def getSuggestions():
     return getPotentialIngredients()
+
+@app.route('/api/upcoming-expiries')
+def getUpcomingExpiries():
+    return getUpcomingExpiryDates()
+
+@app.route('/api/expired-foods')
+def getExpired():
+    return getExpiredFoods()
+
 
 
 if __name__ == '__main__':
