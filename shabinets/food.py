@@ -15,10 +15,6 @@ class Food:
         self.dateExpiry = dateExpiry
         self.amount = amount
 
-    def addToFood(self):
-        database = DataHandler()
-        database.addFood()
-
     def addToUserFood(self):
         database = DataHandler()
         database.addUserFood(self.foodID, self.dateBought, self.dateExpiry, self.amount)
