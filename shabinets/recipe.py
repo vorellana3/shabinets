@@ -28,7 +28,7 @@ def getAllRecipes():
 
 def getNextRecipe():
     #access next perishable to expire
-    next_perishable = food.Food("bacon", 0, datetime.datetime(2022, 10, 20), datetime.datetime(2022, 10, 22), 0)
+    next_perishable = food.Food("tomato", 0, datetime.datetime(2022, 10, 20), datetime.datetime(2022, 10, 22), 0)
     in_database = False
     #if it's in the database, get recipe here
     if in_database:

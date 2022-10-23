@@ -11,7 +11,7 @@ class App extends Component {
       page: "newrecipe",
       title: "",
       ingredients: [],
-      steps: [],
+      steps: "",
     };
 
 
@@ -120,7 +120,7 @@ class App extends Component {
         this.setState({
             title: output['recipe']['label'],
             ingredients: output['recipe']['ingredientLines'],
-            steps: ["hi"],
+            steps: output['recipe']['url'],
         }));
         //console.log(output));
     return;

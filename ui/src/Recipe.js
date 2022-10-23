@@ -14,7 +14,7 @@ class Recipe extends Component {
       <div className="recipe">
         <div className="recipe-title">{this.props.title}</div>
         {this.getIngredientsComp(this.props.ingredients)}
-        {this.getSteps(this.props.steps)}
+        {this.getRecipe(this.props.steps)}
       </div>
     );
   }
@@ -27,14 +27,11 @@ class Recipe extends Component {
     return <ul className="recipe-ingredients">{comps}</ul>;
   }
 
-  getSteps(stepsList) {
-    const comps = [];
-    for (let i = 0; i < stepsList.length; i++) {
-      comps.push(
-        <li className="step" key={i}>{stepsList[i]}</li>
-      );
+  getRecipe(link) {
+    if (link === "") {
+        return <div></div>
     }
-    return <ol className="steps">{comps}</ol>;
+    return <a href={link} target="_blank">Recipe</a>
   }
 
 }
