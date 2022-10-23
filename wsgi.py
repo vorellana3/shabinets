@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
-from shabinets import Food, getRecipe, getAllRecipes, getNextRecipe
+from shabinets import Food, getRecipe, getAllRecipes, getNextRecipe, getPotentialIngredients
 import json
-from shabinets.recipe import getRecipe, getAllRecipes, getNextRecipe, getPotentialIngredients
 from flask_cors import CORS, cross_origin
 from shabinets.DataHandler import DataHandler
 
@@ -47,7 +46,6 @@ def getExpired():
 def addFood(item, exp, bought, amt):
     database = DataHandler()
     database.addUserFood(item, bought, exp, amt)
-
 
 
 if __name__ == '__main__':
