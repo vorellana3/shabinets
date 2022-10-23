@@ -15,6 +15,12 @@ class PerishablePrompt extends Component {
     this.addPerishableField = this.addPerishableField.bind(this);
     this.submitPerishables = this.submitPerishables.bind(this);
     this.updatePerishable = this.updatePerishable.bind(this);
+    this.getButtonContainer = this.getButtonContainer.bind(this);
+    this.pushNewField = this.pushNewField.bind(this);
+    
+    for (let i = 0; i < this.props.fieldCount; i++) {
+      this.pushNewField();
+    }
   }
 
   render() {
@@ -24,14 +30,24 @@ class PerishablePrompt extends Component {
         <div className="perishable-form">
           {this.perishableFields}
         </div>
-        <div className="button-container">
-          <button className="perishable-button" onClick={this.addPerishableField}>Add new perishable</button>
-          <button className="submit-perishables" onClick={this.submitPerishables}>Submit</button></div>
+        {this.getButtonContainer()}
       </div>
     );
   }
 
-  addPerishableField() {
+  getButtonContainer() {
+    if(this.props.fieldCount === 0) {
+      return (
+        <div className="button-container">
+          <button className="perishable-button" onClick={this.addPerishableField}>Add new perishable</button>
+          <button className="submit-perishables" onClick={this.submitPerishables}>Submit</button>
+        </div>
+      );
+    }
+    return <div></div>
+  }
+
+  pushNewField() {
     this.perishableFields.push(
       <PerishableField
         key={this.perishableFields.length}
@@ -39,6 +55,10 @@ class PerishablePrompt extends Component {
         update={this.updatePerishable}
       />
     );
+  }
+
+  addPerishableField() {
+    this.pushNewField();
     this.setState({count: this.perishableFields.length});
   }
   
