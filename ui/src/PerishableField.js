@@ -1,7 +1,5 @@
 import {Component} from "react";
 
-const backend = 'localhost:5000';
-
 class PerishableField extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +88,7 @@ class PerishableField extends Component {
   }
 
   getItemChoices() {
-    fetch(this.props.backend + '/suggestions')
+    fetch('http://localhost:5000/api/suggestions')
       .then((response) => response.json())
       .then((response) => {
           
