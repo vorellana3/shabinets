@@ -8,7 +8,8 @@ class Food:
     dateExpiry = None
     amount = None
 
-    def __init__(self, foodID, dateBought, dateExpiry, amount):
+    def __init__(self, name, foodID, dateBought, dateExpiry, amount):
+        self.name = name
         self.foodID = foodID
         self.dateBought = dateBought
         self.dateExpiry = dateExpiry
