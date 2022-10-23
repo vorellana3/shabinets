@@ -30,7 +30,7 @@ class App extends Component {
         <div className="topbar">
           <div className="topbar-button topbar-recipe-recommendation" onClick={() => {
             this.setState({page: "newrecipe"});
-            this.nextRecipe();
+            this.newRecipe();
           }}>
             New Recipe
           </div>
@@ -72,7 +72,7 @@ class App extends Component {
   }
 
   newRecipe() {
-    let api = this.BACKEND + '/new-recipe';
+    let api = 'http://localhost:5000/new-recipe';
     fetch(api).then(response => response.json()).then(output => 
         this.setState({
             title: output['recipe']['label'],
@@ -80,7 +80,6 @@ class App extends Component {
             steps: output['recipe']['url'],
         }));
         //console.log(output));
-    return;
   }
   
 

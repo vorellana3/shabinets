@@ -1,8 +1,9 @@
 from flask import Flask, jsonify
-from food import Food
+from food import Food, getUpcomingExpiryDates, getExpiredFoods
 import json
-from recipe import getRecipe, getAllRecipes, getNextRecipe, getPotentialIngredients
+from recipe import getRecipe, getNextRecipe, getPotentialIngredients
 from flask_cors import CORS, cross_origin
+
 
 app = Flask("shabinets")
 CORS(app)
@@ -32,6 +33,14 @@ def getNewRecipe():
 @app.route('/suggestions')
 def getSuggestions():
     return getPotentialIngredients()
+
+@app.route('/upcoming-expiries')
+def getUpcomingExpiries():
+    return getUpcomingExpiryDates()
+
+@app.route('/expired-foods')
+def getExpired():
+    return getExpiredFoods()
 
 
 app.run()

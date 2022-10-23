@@ -4,13 +4,11 @@ class Expiring extends Component {
   constructor(props) {
     super(props);
 
-    this.nextExpiring = [
-      ["first", "12-12-2022"],
-      ["second", "9-18-2022"],
-    ];
+    this.state = {nextExpiring: []};
     
     this.updateExpiring = this.updateExpiring.bind(this);
     this.getExpiring = this.getExpiring.bind(this);
+    this.updateExpiring();
   }
 
   render(){
@@ -22,23 +20,24 @@ class Expiring extends Component {
   }
   
   updateExpiring() {
-    fetch(this.props.backend + '/expired-foods')
+    fetch('http://localhost:5000/expired-foods')
       .then(response => response.json())
       .then(response => {
-        this.nextExpiring = "";
+          let arr = [];
         for (let item in response) {
-          this.nextExpiring.push([item, response[item]]);
+          arr.push([item, response[item]]);
         }
+          this.setState({nextExpiring: arr});
       });
   }
 
   getExpiring() {
     let comps = [];
-    for (let i = 0; i < this.nextExpiring.length; i++) {
+    for (let i = 0; i < this.state.nextExpiring.length; i++) {
       comps.push(
         <div className="expiring-item">
-          <div className="expiring-item-name">{i + ". " + this.nextExpiring[i][0]}</div>
-          <div className="expiring-item-date">{this.nextExpiring[i][1]}</div>
+          <div className="expiring-item-name">{(i+1) + ". " + this.state.nextExpiring[i][0]}</div>
+          <div className="expiring-item-date">{this.state.nextExpiring[i][1]}</div>
         </div>
       );
     }
