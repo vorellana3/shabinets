@@ -5,15 +5,15 @@ class Expiring extends Component {
     super(props);
 
     this.state = {nextExpiring: [
-      ["one", "12-12-2221"],
-      ["two", "2-24-2000"],
-      ["three", "10-24-2022"]
+      //["one", "12-12-2221"],
+      //["two", "2-24-2000"],
+      //["three", "10-24-2022"]
     ]};
     
     this.updateExpiring = this.updateExpiring.bind(this);
     this.getExpiring = this.getExpiring.bind(this);
     this.expiryHighlight= this.expiryHighlight.bind(this);
-    //this.updateExpiring();
+    this.updateExpiring();
   }
 
   render(){

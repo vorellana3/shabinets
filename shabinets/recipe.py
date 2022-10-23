@@ -6,6 +6,7 @@ import shabinets.food
 from time import sleep
 import requests
 from shabinets.DataHandler import DataHandler
+import random
 
 def getPotentialIngredients():
     ingredients = ["bacon", "lettuce", "cheese", "tomatoes", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
@@ -56,7 +57,7 @@ def getNextRecipe():
         database.incrementPreference(recipe, -10)
         return recipe
     else:
-        return getRecipe(next_perishable.name)
+        return getRecipe(next_perishable)
     
 class Recipe:
     name = None
