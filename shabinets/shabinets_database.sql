@@ -3,10 +3,9 @@ create database if not exists shabinets;
 use shabinets;
 
 create table food (
-	id INT not null AUTO_INCREMENT,
     food_name varchar(100) not null,
     units varchar(100) not null,
-    primary key (id)
+    primary key (food_name)
 );
 
 create table recipes (
@@ -19,7 +18,7 @@ create table recipes (
 
 create table recipe_ingredient (
     id INT not null AUTO_INCREMENT,
-	food_id INT not null,
+	food_name VARCHAR(100) not null,
     recipe_id INT not null,
     amount FLOAT,
     display_line VARCHAR(1024) not null,
@@ -28,7 +27,7 @@ create table recipe_ingredient (
 
 create table user_food (
 	id INT not null AUTO_INCREMENT,
-    food_id INT not null,
+    food_name varchar(100) not null,
     bought_date DATE,
     expire_date DATE,
     amount FLOAT,
@@ -55,19 +54,19 @@ values ("Rocks", NULL, "https://hrhr.dev"),
 ("Really Big Steak", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Miensk%2C_Vysoki_Rynak%2C_Radzivi%C5%82._%D0%9C%D0%B5%D0%BD%D1%81%D0%BA%2C_%D0%92%D1%8B%D1%81%D0%BE%D0%BA%D1%96_%D0%A0%D1%8B%D0%BD%D0%B0%D0%BA%2C_%D0%A0%D0%B0%D0%B4%D0%B7%D1%96%D0%B2%D1%96%D0%BB_%281901-10%29.jpg/1920px-Miensk%2C_Vysoki_Rynak%2C_Radzivi%C5%82._%D0%9C%D0%B5%D0%BD%D1%81%D0%BA%2C_%D0%92%D1%8B%D1%81%D0%BE%D0%BA%D1%96_%D0%A0%D1%8B%D0%BD%D0%B0%D0%BA%2C_%D0%A0%D0%B0%D0%B4%D0%B7%D1%96%D0%B2%D1%96%D0%BB_%281901-10%29.jpg", "https://google.com"),
 ("The Favorite Meal of the Premier", "https://upload.wikimedia.org/wikipedia/commons/7/7b/Mienski_Teatar2.jpg", NULL);
 
-insert into recipe_ingredient (recipe_id, food_id, amount, display_line)
-values (1,1,1,"yummy yummy salt"),
-(1,2,.33,"pretty pretty quartz"),
-(1,3,.01,"and a sprinkle of diamond"),
-(3,4,.5,"a splash of milk"),
-(3,10,1,"cream for thickening"),
-(3,9,1,"sugar, rocky"),
-(2,7,3,"make it really red"),
-(2,8,NULL,"yeah it has steak in it too"),
-(4,8,NULL,"just a really big steak, nothing else"),
-(5,11,1,"salmon, my favorite -- stalin");
+insert into recipe_ingredient (recipe_id, food_name, amount, display_line)
+values (1,"salt",1,"yummy yummy salt"),
+(1,"quartz",.33,"pretty pretty quartz"),
+(1,"diamond",.01,"and a sprinkle of diamond"),
+(3,"milk",.5,"a splash of milk"),
+(3,"cream",1,"cream for thickening"),
+(3,"sugar",1,"sugar, rocky"),
+(2,"food color",3,"make it really red"),
+(2,"steak",NULL,"yeah it has steak in it too"),
+(4,"steak",NULL,"just a really big steak, nothing else"),
+(5,"lox",1,"salmon, my favorite -- stalin");
 
-insert into user_food (food_id, expire_date, amount)
-values (1, '2023-01-04', 3),
-(8, '2022-01-01', 1),
-(11, '2022-10-25', 11);
+insert into user_food (food_name, expire_date, amount)
+values ("salt", '2023-01-04', 3),
+("steak", '2022-01-01', 1),
+("lox"'2022-10-25', 11);
