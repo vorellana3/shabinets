@@ -29,3 +29,11 @@ create table user_food (
     amount decimal(9,0) not null,
     primary key (food_id)
 ) engine = innodb;
+
+alter table recipes add column (
+    link varchar(1024) not null
+)
+
+alter table recipe_ingredient add column (
+    display_line varchar(1024) not null
+)
