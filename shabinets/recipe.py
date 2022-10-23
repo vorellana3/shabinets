@@ -5,6 +5,7 @@ from time import sleep
 import random
 import requests
 import food
+import DataHandler
 
 def getRecipe(search):
     request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
@@ -28,12 +29,12 @@ def getAllRecipes():
 
 def getNextRecipe():
     #access next perishable to expire
-    next_perishable = food.Food("bacon", 0, datetime.datetime(2022, 10, 20), datetime.datetime(2022, 10, 22), 0)
+    database = DataHandler()
+    next_perishable = database.findNextExpired()
     in_database = False
     #if it's in the database, get recipe here
     if in_database:
-        #get recipe from database for this perishable
-        return None
+        
     else:
         print("NAME: " + next_perishable.name)
         return getRecipe(next_perishable.name)
