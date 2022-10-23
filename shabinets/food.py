@@ -24,3 +24,6 @@ class Food:
     def addToUserFood(self):
         database = DataHandler()
         database.addUserFood(self.foodID, self.dateBought, self.dateExpiry, self.amount)
+
+    def getName():
+        return self.foodName

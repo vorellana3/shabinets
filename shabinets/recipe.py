@@ -8,7 +8,7 @@ import random
 import requests
 import json
 import food
-import DataHandler
+from DataHandler import DataHandler
 
 def getRecipe(search):
     request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
@@ -38,7 +38,9 @@ def getNextRecipe():
         in_database = False
     #if it's in the database, get recipe here
     if in_database:
-        return database.getJsonRecipe(next_perishable)
+        recipe = database.getRecipeByFood(next_perishable)
+        database.incrementPreference(recipe, -10)
+        return recipe
     else:
         return getRecipe(next_perishable.name)
     
@@ -66,3 +68,20 @@ class Recipe:
         }
         return json.dumps(value)
 
+def recipeFromJson(recipe_json):
+    dataHandler = DataHandler()
+    recipe = Recipe(recipe_json['recipe']['label'], recipe_json['recipe']['images']['REGULAR']['url'],
+                    dataHandler.getNextRecipeID(), recipe_json['recipe']['ingredients'], recipe_json['recipe']['url'])
+    return recipe
+
+def jsonFromRecipe(recipe):
+    recipe_json = {
+            "recipe": {
+                "label": recipe.name,
+                "ingredients": self.ingredients,
+                "image": self.picture,
+                "instructions": self.instructions
+                "id": self.id
+                }
+            }
+    return json.dumps(recipe_json)
