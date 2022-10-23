@@ -115,7 +115,15 @@ class App extends Component {
     ];
     
     let id = Math.floor(Math.random() * recipes.length);
-
+    let api = "http://localhost:5000/tomato";
+    fetch(api).then(response => response.json()).then(output => 
+        this.setState({
+            title: output['recipe']['label'],
+            ingredients: output['recipe']['ingredientLines'],
+            steps: ["hi"],
+        }));
+        //console.log(output['recipe']['label']));
+    return;
     this.setState({
       title: recipes[id][0],
       ingredients: recipes[id][1],
