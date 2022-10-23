@@ -1,10 +1,10 @@
 import json
 import datetime
-import food
 from time import sleep
 import random
 import requests
-import food
+
+import shabinets.food
 
 def getRecipe(search):
     request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
@@ -17,7 +17,7 @@ def getAllRecipes():
     ingredients = ["bacon", "lettuce", "cheese", "tomates", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
                    "anchovy", "onion", "garlic", "pineapple", "gouda", "muenster", "steak", "sugar", "flour", "pumpkin",
                    "carrot", "peas", "broccoli", "brussel sprouts", "tofu", "chili", "beans"]
-    
+
     for search in ingredients:
         sleep(7)
         request_string = "https://api.edamam.com/api/recipes/v2?type=public&q=" + search + "&app_id=93598680&app_key=c8eaae5039730056d24a50c29c448761"
@@ -37,6 +37,4 @@ def getNextRecipe():
     else:
         print("NAME: " + next_perishable.name)
         return getRecipe(next_perishable.name)
-    
-
 
