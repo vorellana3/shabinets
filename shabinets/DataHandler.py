@@ -18,58 +18,96 @@ class DataHandler:
     
     self.cursor = self.mydb.cursor()
 
-  def addFood(self, id, food_name, units):
-    sql = "INSERT INTO food (id, food_name, units) VALUES (%s, %s, %s)"
-    val = (id, food_name, units)
+  def addFood(self, food_name, units):
+    sql = "INSERT INTO food (food_name, units) VALUES (%s, %s, %s)"
+    val = (food_name, units)
     self.cursor.execute(sql, val)
     self.mydb.commit()
 
-  def addUserFood(self, id, bought, expire, amount):
-    sql = "INSERT INTO food (id, bought, expire, amount) VALUES (%s, %s, %s. %s)"
-    val = (id, bought, expire, amount)
+  def addRecipeIngredient(self, food_name, recipeId, amount, displayLine):
+    sql = "INSERT INTO recipe_ingredient (food_name, recipe_id, amount, display_line) VALUES (%s, %s, %s)"
+    val = (food_name, recipeId, amount, displayLine)
     self.cursor.execute(sql, val)
     self.mydb.commit()
 
-  def getJsonRecipe(self, perishable):
+  def addUserFood(self, name, bought, expire, amount):
+    sql = "INSERT INTO user_food (name, bought, expire, amount) VALUES (%s, %s, %s. %s)"
+    val = (name, bought, expire, amount)
+    self.cursor.execute(sql, val)
+    self.mydb.commit()
+
+  def getRecipeByFood(self, perishableObject):
     recipeName = None
     recipeId = None
     recipePicture = None
     instructionsLink = None
     ingredientsList = []
-    query = ("select recipe_id from recipe_ingredient where food_id = (select food_id from food where food_name = %s)")
+    perishable = perishableObject.getName()
+    query = ("select recipe_id from recipe_ingredient where food_name = %s")
     self.cursor.execute(query, (perishable))
     for recipe_id in self.cursor:
       recipeId = recipeId
       break
-    query = "select recipe_name, instructions_link, pic_link from recipe where id = %s"
+    if recipeId == None:
+      return None
+    query = "select recipe_name, instructions_link, pic_link, from recipe where id = %s order by preference desc"
     self.cursor.execute(query, (recipeId))
-    for recipe_name, instructions_link, pic_link in self.cursor:
+    for recipe_name, instructions_link, pic_link, in self.cursor:
       recipeName = recipe_name
       recipePicture = pic_link
       instructionsLink = instructions_link
       break
-    query = ("select display_line from recipe where recipe_id = %s")
+    query = ("select display_line from recipe_ingredient where recipe_id = %s")
     self.cursor.execute(query, (recipeId))
     for display_line in self.cursor:
       ingredientsList.append(display_line)
     recipe = Recipe(recipeName, recipePicture, recipeId, ingredientsList, instructionsLink)
-    return recipe.getJson
+    return recipe
     
   def findNextExpired(self):
-    FoodId = None
     foodName = None
     boughtId = None
     expireId = None
     foodAmount = None
-    query = ("select food_id, bought_id, expire_date, amount from user_food where expire_date = min(expire_date)")
+    query = ("select * from user_food where expire_date = (select min(expire_date) from user_food))")
     self.cursor.execute(query)
-    for food_id, bought_id, expire_date, amount in self.cursor:
-      foodId= food_id
+    for food_name, bought_id, expire_date, amount in self.cursor:
+      foodName= food_name
       boughtId = bought_id
-      expireDate = expire_date
+      expireId = expire_date
       foodAmount = amount
-    nameQuerry = ("select name from food where food_id = (select food_id from user_food order by expire_date limit 1)")
-    self.cursor.execute(nameQuerry)
-    for name in self.cursor:
-      foodName = name
-    food = Food(foodName, foodId, boughtId, expireId, foodAmount)
+    food = Food(foodName, boughtId, expireId, foodAmount)
+    return food
+
+    def incrementPreference(recipeObject, increment):
+      id = recipeObject.getId()
+      sql = "UPDATE recipes SET points = recipeObject + increment WHERE user_id = %s"
+      self.cursor.execute(sql,(id))
+      self.mydb.commit
+  
+    def getNextRecipeID():
+      query = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'shabinets' AND TABLE_NAME = 'recipes'"
+      self.cursor.execute(query)
+      for AUTO_INCREMENT in self.cursor:
+        id = AUTO_INCREMENT
+        break
+
+    def enterRecipe(self, jsonObject):
+      for recipeDict in jsonObject["hits"]:
+        id = getNextRecipeID
+        name = recipeDict["recipe"]["label"]
+        picLink = recipeDict["recipe"]["image"]
+        IngredientList = ["ingredients"]
+        instructionsLink = recipeDict["url"]
+        sql = "INSERT INTO recipe (id, recipe_name, pic_link, instructions_link, preference) VALUES (%s, %s, %s. %s)"
+        val = (id, name, picLink, instructionsLink, 0)
+        self.cursor.execute(sql, val)
+        self.mydb.commit()
+
+        for ingredient in IngredientList:
+          ingredientName = ingredient["food"]
+          units = ingredient["measure"]
+          displayLine = ingredient["text"]
+          amount = ingredient["quantity"]
+          self.addFood(ingredientName, units)
+          self.addRecipeIngredient(ingredientName, id, amount, displayLine)

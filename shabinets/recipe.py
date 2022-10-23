@@ -47,6 +47,7 @@ class Recipe:
     picture = None
     id = None
     instructions = None
+    preference = 0
     ingredients = []
 
     def __init__(self, name, picture, id, ingredients, instructions):

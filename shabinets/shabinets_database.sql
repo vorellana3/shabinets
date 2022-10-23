@@ -13,6 +13,7 @@ create table recipes (
     recipe_name VARCHAR(1024) not null,
     pic_link VARCHAR(1024),
     instructions_link VARCHAR(1024),
+    preference INT not null,
     primary key (id)
 );
 
