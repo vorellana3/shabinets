@@ -33,25 +33,28 @@ def getNextRecipe():
     #access next perishable to expire
     database = DataHandler()
     next_perishable = database.findNextExpired()
-    in_database = False
+    in_database = True
+    if next_perishable == None:
+        in_database = False
     #if it's in the database, get recipe here
     if in_database:
-        print ("PLACEHOLDER")
+        return database.getJsonRecipe(next_perishable)
     else:
-        print("NAME: " + next_perishable.name)
         return getRecipe(next_perishable.name)
     
 class Recipe:
     name = None
     picture = None
     id = None
+    instructions = None
     ingredients = []
 
-    def __init__(self, name, picture, id, ingredients):
+    def __init__(self, name, picture, id, ingredients, instructions):
         self.name = name
         self.picture = picture
         self.id = id
         self.ingredients = ingredients
+        self.instructions = instructions
 
     def getJson(self) :
         value = {
