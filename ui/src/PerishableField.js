@@ -11,6 +11,7 @@ class PerishableField extends Component {
       item: '',
       dateExp: '',
       dateBought: '',
+      choices: ["beef", "chicken", "pork"],
     };
 
     this.changeItemName = this.changeItemName.bind(this);
@@ -20,6 +21,7 @@ class PerishableField extends Component {
     this.getItemChoies = this.getItemChoices.bind(this);
 
     this.update();
+    this.getItemChoices();
   }
 
   changeItemName(event) {
@@ -57,7 +59,7 @@ class PerishableField extends Component {
               list="item-choices"
             />
             <datalist id="item-choices">
-              {this.getItemChoices()}
+              {this.state.choices}
             </datalist>
           </label>
       </div>
@@ -86,30 +88,23 @@ class PerishableField extends Component {
       </div>      
     );
   }
-  
-  getSuggestionList() {
-    fetch(backend + '/suggestions')
+
+  getItemChoices() {
+    fetch('http://localhost:5000/suggestions')
+      .then((response) => response.json())
       .then((response) => {
+          
         if (response) {
           return response;
         }
         return ["beef", "chicken", "pork"];
-      })
-  }
-
-  getItemChoices() {
-    this.getSuggestionList();
-    const choices = [
-      "beef",
-      "chicken",
-      "pork",
-    ];
-    const comps = [];
-    for (let i = 0; i < choices.length; i++) {
-      comps.push(<option value={choices[i]} key={i} />);
-    }
-    
-    return comps;
+      }).then((choices) => {
+        const comps = [];
+        for (let i = 0; i < choices.length; i++) {
+            comps.push(<option value={choices[i]} key={i} />);
+        }
+        this.setState({choices: comps});
+      });
   }
 
 }

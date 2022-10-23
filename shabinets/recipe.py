@@ -10,6 +10,7 @@ def getPotentialIngredients():
     ingredients = ["bacon", "lettuce", "cheese", "tomates", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
                    "anchovy", "onion", "garlic", "pineapple", "gouda", "muenster", "steak", "sugar", "flour", "pumpkin",
                    "carrot", "peas", "broccoli", "brussel sprouts", "tofu", "chili", "beans"]
+    return ingredients
     
 
 
