@@ -1,9 +1,15 @@
-from flask import Flask
+from flask import Flask, jsonify
+import json
+from recipes_access import getNextRecipe, getAllRecipes
+from flask_cors import CORS, cross_origin
 
 app = Flask("shabinets")
+CORS(app)
 
-@app.route('/hello')
+@app.route('/<food>')
 
-def hello():
+def index(food):
+    recipe = getNextRecipe(food)#.headers.add('Access-Control-Allow-Origin', '*')
+    return recipe
 
-    return "Hello world!"
+app.run()
