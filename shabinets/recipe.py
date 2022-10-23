@@ -1,10 +1,13 @@
+from http.client import PROXY_AUTHENTICATION_REQUIRED
 import json
 import datetime
+from unicodedata import name
 import food
 from time import sleep
-import random
 import requests
+import json
 import food
+from DataHandler import DataHandler
 
 def getPotentialIngredients():
     ingredients = ["bacon", "lettuce", "cheese", "tomates", "eggs", "mushrooms", "beef", "pork", "chicken", "potatoes",
@@ -29,18 +32,60 @@ def getAllRecipes():
         response = json.dumps(response.json(), indent=4)
         with open("recipes.json", "a") as outfile:
             outfile.write(response)
-
 def getNextRecipe():
     #access next perishable to expire
-    next_perishable = food.Food("tomato", 0, datetime.datetime(2022, 10, 20), datetime.datetime(2022, 10, 22), 0)
-    in_database = False
+    database = DataHandler()
+    next_perishable = database.findNextExpired()
+    in_database = True
+    if next_perishable == None:
+        in_database = False
     #if it's in the database, get recipe here
     if in_database:
-        #get recipe from database for this perishable
-        return None
+        recipe = database.getRecipeByFood(next_perishable)
+        database.incrementPreference(recipe, -10)
+        return recipe
     else:
-        print("NAME: " + next_perishable.name)
         return getRecipe(next_perishable.name)
     
+class Recipe:
+    name = None
+    picture = None
+    id = None
+    instructions = None
+    preference = 0
+    ingredients = []
 
+    def __init__(self, name, picture, id, ingredients, instructions):
+        self.name = name
+        self.picture = picture
+        self.id = id
+        self.ingredients = ingredients
+        self.instructions = instructions
 
+    def getJson(self) :
+        value = {
+            "recipe": {
+                "label": self.name,
+                "ingrdientlines": self.ingredients,
+                "url": self.picture
+            }
+        }
+        return json.dumps(value)
+
+def recipeFromJson(recipe_json):
+    dataHandler = DataHandler()
+    recipe = Recipe(recipe_json['recipe']['label'], recipe_json['recipe']['images']['REGULAR']['url'],
+                    dataHandler.getNextRecipeID(), recipe_json['recipe']['ingredients'], recipe_json['recipe']['url'])
+    return recipe
+
+def jsonFromRecipe(recipe):
+    recipe_json = {
+            "recipe": {
+                "label": recipe.name,
+                "ingredients": self.ingredients,
+                "image": self.picture,
+                "instructions": self.instructions
+                "id": self.id
+                }
+            }
+    return json.dumps(recipe_json)
