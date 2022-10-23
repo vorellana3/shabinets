@@ -16,7 +16,6 @@ class App extends Component {
       steps: "",
     };
 
-    this.BACKEND = 'http:localhost:5000';
 
 
     this.errorPage = this.errorPage.bind(this);
@@ -52,8 +51,8 @@ class App extends Component {
     switch(this.state.page) {
       case "home": return <div className="home">Welcome to Shabinets!</div>
       case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps}/>
-      case "perishables": return <PerishablePrompt header="Enter your perishables" fieldCount={0} backend={this.BACKEND}/>
-      case "expiring": return <Expiring backend={this.BACKEND}/>
+      case "perishables": return <PerishablePrompt header="Enter your perishables" fieldCount={0} />
+      case "expiring": return <Expiring />
       default: return this.errorPage();
     }
   }
