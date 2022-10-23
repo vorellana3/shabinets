@@ -12,7 +12,7 @@ class App extends Component {
       page: "perishables",
       title: "",
       ingredients: [],
-      steps: [],
+      steps: "",
     };
 
 
@@ -120,7 +120,15 @@ class App extends Component {
     ];
     
     let id = Math.floor(Math.random() * recipes.length);
-
+    let api = "http://localhost:5000/new-recipe";
+    fetch(api).then(response => response.json()).then(output => 
+        this.setState({
+            title: output['recipe']['label'],
+            ingredients: output['recipe']['ingredientLines'],
+            steps: output['recipe']['url'],
+        }));
+        //console.log(output));
+    return;
     this.setState({
       page: "newrecipe",
       title: recipes[id][0],
