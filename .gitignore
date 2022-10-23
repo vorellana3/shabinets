@@ -2,5 +2,6 @@
 dist
 env
 **/__pycache__
+/build
 shabinets/build
 **/.env
