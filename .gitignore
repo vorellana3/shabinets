@@ -5,3 +5,4 @@ env
 /build
 shabinets/build
 **/.env
+build
