@@ -69,4 +69,4 @@ values (1,"salt",1,"yummy yummy salt"),
 insert into user_food (food_name, expire_date, amount)
 values ("salt", '2023-01-04', 3),
 ("steak", '2022-01-01', 1),
-("lox"'2022-10-25', 11);
+("lox", '2022-10-25', 11);
