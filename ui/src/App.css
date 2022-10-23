@@ -8,6 +8,20 @@
   }
 }
 
+.image-container {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  height: 240px;
+}
+
+.recipe-link {
+  margin-left: 16px;
+}
+
 .error-page-header{
   background-color: #282c34;
   min-height: 100vh;

@@ -13,13 +13,22 @@ class Recipe extends Component {
     return (
       <div className="recipe">
         <div className="recipe-title">{this.props.title}</div>
+        <div className="image-container">{this.getImage(this.props.imageLink)}</div>
         {this.getIngredientsComp(this.props.ingredients)}
         {this.getRecipe(this.props.steps)}
       </div>
     );
   }
 
+  getImage(src) {
+    if(src === "") {
+      return <div></div>
+    }
+    return <img src={src} alt={"image"} />
+  }
+
   getIngredientsComp(ingredientsList) {
+    console.log(ingredientsList);
     const comps = [];
     for (let i = 0; i < ingredientsList.length; i++) {
       comps.push(<li className="ingredient" key={i}>{ingredientsList[i]}</li>);
@@ -31,7 +40,7 @@ class Recipe extends Component {
     if (link === "") {
         return <div></div>
     }
-    return <a href={link} target="_blank">Recipe</a>
+    return <a className="recipe-link" href={link} target="_blank">Recipe</a>
   }
 
 }

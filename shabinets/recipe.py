@@ -54,7 +54,7 @@ def getNextRecipe():
         in_database = False
     if in_database:
         recipe = database.getRecipeByFood(next_perishable)
-        database.incrementPreference(recipe, -10)
+        database.incrementPreference(recipe["recipe"]["id"][0], -10)
         return recipe
     else:
         return getRecipe(next_perishable)

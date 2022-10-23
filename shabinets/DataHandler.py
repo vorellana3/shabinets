@@ -15,6 +15,7 @@ class DataHandler:
     def __init__(self):
     
         self.cursor = self.mydb.cursor()
+        self.cursor = self.mydb.cursor(buffered=True)
 
     def addFood(self, food_name, units):
         sql = "INSERT INTO food (food_name, units) VALUES (%s, %s, %s)"
@@ -44,11 +45,11 @@ class DataHandler:
         query = ("select recipe_id from recipe_ingredient where food_name = %s")
         self.cursor.execute(query, (perishable,))
         for recipe_id in self.cursor:
-            recipeId = recipeId
+            recipeId = recipe_id
             break
         if recipeId == None:
             return None
-        query = "select recipe_name, instructions_link, pic_link, from recipe where id = %s order by preference desc"
+        query = "select recipe_name, instructions_link, pic_link from recipes where id = %s order by preference desc"
         self.cursor.execute(query, (recipeId))
         for recipe_name, instructions_link, pic_link, in self.cursor:
             recipeName = recipe_name
@@ -59,7 +60,16 @@ class DataHandler:
         self.cursor.execute(query, (recipeId))
         for display_line in self.cursor:
             ingredientsList.append(display_line)
-        return recipeName
+            recipe_json = {
+                "recipe": {
+                    "label": recipeName,
+                    "ingredients": ingredientsList,
+                    "image": recipePicture,
+                    "instructions": instructionsLink,
+                    "id": recipeId
+                }
+            }
+        return recipe_json
     
     def findNextExpired(self):
         foodName = None
@@ -77,8 +87,8 @@ class DataHandler:
 
     def incrementPreference(self, recipeObjectID, increment):
         id = recipeObjectID
-        sql = "UPDATE recipes SET points = recipeObject + increment WHERE user_id = %s"
-        self.cursor.execute(sql,(id,))
+        sql = "UPDATE recipes SET preference = preference + %s WHERE id = %s"
+        self.cursor.execute(sql,(increment, id))
         self.mydb.commit
 
     def getNextRecipeID():

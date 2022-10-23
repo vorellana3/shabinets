@@ -43,6 +43,11 @@ def getUpcomingExpiries():
 def getExpired():
     return getExpiredFoods()
 
+@app.route('/api/add-food/<item>/<exp>/<bought>/<amt>')
+def addFood(item, exp, bought, amt):
+    database = DataHandler()
+    database.addUserFood(item, bought, exp, amt)
+
 
 
 if __name__ == '__main__':

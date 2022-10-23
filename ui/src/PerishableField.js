@@ -9,17 +9,25 @@ class PerishableField extends Component {
       item: '',
       dateExp: '',
       dateBought: '',
+      amount: 0,
       choices: ["beef", "chicken", "pork"],
     };
 
     this.changeItemName = this.changeItemName.bind(this);
     this.changeDateExp = this.changeDateExp.bind(this);
     this.changeDateBought = this.changeDateBought.bind(this);
+    this.changeAmount = this.changeAmount.bind(this);
     this.update = this.update.bind(this);
     this.getItemChoies = this.getItemChoices.bind(this);
 
     this.update();
     this.getItemChoices();
+  }
+
+  changeAmount(event) {
+    let val = parseInt(event.target.value)
+    this.setState({amount: val});
+    this.update();
   }
 
   changeItemName(event) {
@@ -38,7 +46,7 @@ class PerishableField extends Component {
   }
 
   update() {
-    this.props.update(this.state.id - 1, [this.state.item, this.state.dateExp, this.state.dateBought]);
+    this.props.update(this.state.id - 1, [this.state.item, this.state.dateExp, this.state.dateBought, this.amount]);
   }
   
 
@@ -59,6 +67,17 @@ class PerishableField extends Component {
             <datalist id="item-choices">
               {this.state.choices}
             </datalist>
+          </label>
+          <label className="perishable-field-amount">
+            {"Amount: "}
+            <input
+            id={'amount-' + this.state.id}
+            className="perishable-field-amount-input"
+            type="number"
+            value={this.state.amount}
+            onChange={this.changeAmount}
+            >
+            </input>
           </label>
       </div>
         <div className="perishable-field-dates">

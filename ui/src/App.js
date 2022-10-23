@@ -14,6 +14,7 @@ class App extends Component {
       title: "",
       ingredients: [],
       steps: "",
+      imageLink: "",
     };
 
 
@@ -50,7 +51,7 @@ class App extends Component {
   getPage() {
     switch(this.state.page) {
       case "home": return <div className="home">Welcome to Shabinets!</div>
-      case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps}/>
+      case "newrecipe": return <Recipe title={this.state.title} ingredients={this.state.ingredients} steps={this.state.steps} imageLink={this.state.imageLink}/>
       case "perishables": return <PerishablePrompt header="Enter your perishables" fieldCount={0} />
       case "expiring": return <Expiring />
       default: return this.errorPage();
@@ -73,12 +74,14 @@ class App extends Component {
   newRecipe() {
     let api = 'http://localhost:5000/api/new-recipe';
     fetch(api).then(response => response.json()).then(output => 
+      //console.log(output));
         this.setState({
             title: output['recipe']['label'],
-            ingredients: output['recipe']['ingredientLines'],
-            steps: output['recipe']['url'],
+            ingredients: output['recipe']['ingredients'],
+            steps: output['recipe']['instructions'],
+            imageLink: output['recipe']['image'],
         }));
-        //console.log(output));
+        //console.log(output);
   }
   
 
